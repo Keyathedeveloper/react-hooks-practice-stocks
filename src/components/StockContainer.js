@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Stock from "./Stock";
 
-function StockContainer() {
-  const [stocks, setStocks] = useState([]);
-
-  useEffect(() => {
-    fetch("https://api.example.com/stocks") // replace with your API URL
-      .then((response) => response.json())
-      .then((data) => setStocks(data));
-  }, []);
+function StockContainer({stocks, onAddStock}) {
+  const stockList = stocks.map((stock) => (
+    <Stock key={stock.id} stock={stock} onStockClick={onAddStock} />
+  ));
 
   return (
     <div>
       <h2>Stocks</h2>
-      {stocks.map((stock) => (
-        <Stock key={stock.id} stock={stock} />
-      ))}
+      {stockList}
     </div>
   );
+
 }
 
 export default StockContainer;
